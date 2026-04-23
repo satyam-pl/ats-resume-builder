@@ -84,6 +84,24 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
 .ai-loading{font-size:12px;color:var(--accent);padding:8px 0;display:flex;align-items:center;gap:6px}
 .ai-tag{font-size:10px;background:linear-gradient(135deg,#6366f1,#2563eb);color:#fff;padding:2px 8px;border-radius:20px;margin-left:6px;vertical-align:middle}
 
+/* ATS SCORE CHECKER */
+.ats-score-box{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px;width:100%}
+.ats-score-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ats-score-label{font-size:12px;font-weight:500;color:var(--navy)}
+.ats-score-num{font-size:24px;font-weight:500;line-height:1}
+.ats-score-num span{font-size:12px;color:var(--muted);font-weight:400}
+.ats-bar-bg{height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden;margin-bottom:10px}
+.ats-bar-fill{height:100%;border-radius:4px;transition:width 0.5s ease,background 0.5s ease}
+.ats-checks{display:flex;flex-direction:column;gap:5px}
+.ats-check{display:flex;align-items:center;gap:7px;font-size:11px;padding:2px 0}
+.ats-check .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ats-check.pass .dot{background:#16a34a}
+.ats-check.pass{color:#166534}
+.ats-check.fail .dot{background:#ef4444}
+.ats-check.fail{color:#991b1b}
+.ats-check.warn .dot{background:#f59e0b}
+.ats-check.warn{color:#92400e}
+
 /* ===== CV PAPER WRAPPER ===== */
 .cv-paper-wrap{background:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.15);width:210mm;height:auto;min-height:0;transform-origin:top center}
 @media(max-width:900px){.cv-paper-wrap{width:100%;transform:none!important}}
@@ -249,6 +267,19 @@ footer p{font-size:13px;margin-top:0.5rem}
       <div class="print-tip">
         When the print dialog opens → set <b>Destination</b> to "Save as PDF" → set <b>Margins</b> to "None" → click Save
       </div>
+
+      <!-- ATS SCORE BOX -->
+      <div class="ats-score-box">
+        <div class="ats-score-header">
+          <div class="ats-score-label">ATS Score</div>
+          <div class="ats-score-num" id="ats-num" style="color:#1a2744">0<span>/100</span></div>
+        </div>
+        <div class="ats-bar-bg">
+          <div class="ats-bar-fill" id="ats-bar" style="width:0%;background:#ef4444"></div>
+        </div>
+        <div class="ats-checks" id="ats-checks"></div>
+      </div>
+
       <div id="cv-preview" style="width:100%;display:flex;justify-content:center"></div>
     </div>
   </div>
@@ -422,6 +453,120 @@ function buildCVHTML(tpl){
 function render(){
   const html=buildCVHTML(currentTpl);
   document.getElementById('cv-preview').innerHTML=`<div class="cv-paper-wrap">${html}</div>`;
+  updateATSScore();
+}
+
+function updateATSScore(){
+  const name=val('name');
+  const email=val('email');
+  const phone=val('phone');
+  const location=val('location');
+  const linkedin=val('linkedin');
+  const summary=val('summary');
+
+  const checks=[];
+  let score=0;
+
+  // 1. Name filled (5pts)
+  const hasName=name.trim().length>1;
+  checks.push({label:'Full name added', pass:hasName, pts:5});
+  if(hasName) score+=5;
+
+  // 2. Email (10pts)
+  const hasEmail=email.includes('@')&&email.includes('.');
+  checks.push({label:'Email address added', pass:hasEmail, pts:10});
+  if(hasEmail) score+=10;
+
+  // 3. Phone (5pts)
+  const hasPhone=phone.trim().length>7;
+  checks.push({label:'Phone number added', pass:hasPhone, pts:5});
+  if(hasPhone) score+=5;
+
+  // 4. Location (5pts)
+  const hasLoc=location.trim().length>2;
+  checks.push({label:'Location added', pass:hasLoc, pts:5});
+  if(hasLoc) score+=5;
+
+  // 5. LinkedIn (5pts)
+  const hasLinkedIn=linkedin.trim().length>4;
+  checks.push({label:'LinkedIn profile added', pass:hasLinkedIn, pts:5});
+  if(hasLinkedIn) score+=5;
+
+  // 6. Summary (10pts)
+  const hasSummary=summary.trim().length>30;
+  checks.push({label:'Professional summary written', pass:hasSummary, pts:10});
+  if(hasSummary) score+=10;
+
+  // 7. Summary has keywords (5pts)
+  const summaryWords=summary.toLowerCase().split(/\s+/).length;
+  const goodSummary=summaryWords>=15;
+  checks.push({label:'Summary is detailed (15+ words)', pass:goodSummary, pts:5, warn:summaryWords>0&&!goodSummary});
+  if(goodSummary) score+=5;
+
+  // 8. Work experience exists (10pts)
+  const hasExp=exps.length>0;
+  checks.push({label:'Work experience added', pass:hasExp, pts:10});
+  if(hasExp) score+=10;
+
+  // 9. Experience has bullet points (10pts)
+  const hasBullets=exps.some(e=>(e.desc||'').includes('•')||(e.desc||'').length>30);
+  checks.push({label:'Experience has achievement bullets', pass:hasBullets, pts:10, warn:hasExp&&!hasBullets});
+  if(hasBullets) score+=10;
+
+  // 10. Education added (5pts)
+  const hasEdu=edus.length>0;
+  checks.push({label:'Education added', pass:hasEdu, pts:5});
+  if(hasEdu) score+=5;
+
+  // 11. Skills added (10pts)
+  const hasSkills=skills.length>=3;
+  checks.push({label:'At least 3 skills added', pass:hasSkills, pts:10, warn:skills.length>0&&skills.length<3});
+  if(hasSkills) score+=10;
+
+  // 12. 5+ skills (5pts)
+  const hasMoreSkills=skills.length>=5;
+  checks.push({label:'5+ skills for better ATS match', pass:hasMoreSkills, pts:5, warn:skills.length>=3&&skills.length<5});
+  if(hasMoreSkills) score+=5;
+
+  // 13. Certifications (5pts)
+  const hasCerts=certs.length>0;
+  checks.push({label:'Certifications added (boosts ATS score)', pass:hasCerts, pts:5, warn:!hasCerts});
+  if(hasCerts) score+=5;
+
+  // 14. Action verbs in bullets (5pts)
+  const actionVerbs=['engineered','developed','automated','optimized','designed','led','built','reduced','improved','managed','created','implemented','delivered','launched','increased','decreased','achieved','coordinated','analyzed','streamlined'];
+  const allDesc=exps.map(e=>e.desc||'').join(' ').toLowerCase();
+  const hasActionVerbs=actionVerbs.some(v=>allDesc.includes(v));
+  checks.push({label:'Achievement bullets use action verbs', pass:hasActionVerbs, pts:5, warn:hasExp&&!hasActionVerbs});
+  if(hasActionVerbs) score+=5;
+
+  // Render score
+  const scoreEl=document.getElementById('ats-num');
+  const barEl=document.getElementById('ats-bar');
+  const checksEl=document.getElementById('ats-checks');
+
+  const color=score>=80?'#16a34a':score>=50?'#f59e0b':'#ef4444';
+  scoreEl.style.color=color;
+  scoreEl.innerHTML=`${score}<span>/100</span>`;
+  barEl.style.width=score+'%';
+  barEl.style.background=color;
+
+  // Show only failed/warn checks (max 5) + summary line
+  const failed=checks.filter(c=>!c.pass);
+  const passed=checks.filter(c=>c.pass).length;
+
+  let html='';
+  // Show top 4 issues
+  failed.slice(0,4).forEach(c=>{
+    const cls=c.warn?'warn':'fail';
+    const icon=c.warn?'⚠ Fix:':'✗';
+    html+=`<div class="ats-check ${cls}"><div class="dot"></div><span>${icon} ${c.label}</span></div>`;
+  });
+  // Show passed count
+  if(passed>0){
+    html+=`<div class="ats-check pass"><div class="dot"></div><span>✓ ${passed} of ${checks.length} checks passed</span></div>`;
+  }
+  checksEl.innerHTML=html||'<div class="ats-check pass"><div class="dot"></div><span>✓ All checks passed!</span></div>';
 }
 
 function downloadPDF(){
