@@ -102,6 +102,32 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
 .ats-check.warn .dot{background:#f59e0b}
 .ats-check.warn{color:#92400e}
 
+/* JD KEYWORD MATCHER */
+.jd-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:0}
+@media(max-width:700px){.jd-wrap{grid-template-columns:1fr}}
+.jd-input-col{display:flex;flex-direction:column;gap:8px}
+.jd-label{font-size:13px;font-weight:500;color:var(--navy)}
+.jd-textarea{width:100%;height:200px;padding:12px;font-size:13px;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;resize:vertical;outline:none;color:var(--text);background:#fff;line-height:1.5}
+.jd-textarea:focus{border-color:var(--accent)}
+.jd-analyze-btn{padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s}
+.jd-analyze-btn:hover{background:#1d4ed8}
+.jd-results-col{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;display:flex;flex-direction:column}
+.jd-match-header{margin-bottom:14px}
+.jd-match-label{font-size:12px;color:var(--muted);margin-bottom:4px}
+.jd-match-score{font-size:28px;font-weight:500;color:var(--navy);margin-bottom:6px}
+.jd-bar-bg{height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden}
+.jd-bar-fill{height:100%;border-radius:4px;background:var(--accent);transition:width 0.5s ease,background 0.5s ease}
+.jd-kw-section{}
+.jd-kw-title{font-size:12px;font-weight:500;margin-bottom:8px}
+.jd-found-title{color:#166534}
+.jd-missing-title{color:#991b1b}
+.jd-kw-list{display:flex;flex-wrap:wrap;gap:6px}
+.jd-kw-found{background:#dcfce7;border:1px solid #86efac;color:#166534;padding:3px 10px;border-radius:20px;font-size:12px}
+.jd-kw-missing{background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;padding:3px 10px;border-radius:20px;font-size:12px;cursor:pointer;transition:background 0.15s}
+.jd-kw-missing:hover{background:#fecaca}
+.jd-add-btn{margin-top:14px;padding:8px 16px;background:#fff;color:var(--accent);border:1px solid var(--accent);border-radius:8px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500}
+.jd-add-btn:hover{background:var(--light)}
+
 /* ===== CV PAPER WRAPPER ===== */
 .cv-paper-wrap{background:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.15);width:210mm;height:auto;min-height:0;transform-origin:top center}
 @media(max-width:900px){.cv-paper-wrap{width:100%;transform:none!important}}
@@ -292,8 +318,37 @@ footer p{font-size:13px;margin-top:0.5rem}
   <div class="ad-slot">Advertisement</div>
 </div>
 
+<!-- JD KEYWORD MATCHER -->
 <div class="content-section">
-  <h2>Why use CVCraft India?</h2>
+  <h2>Job Description Keyword Matcher <span class="ai-tag" style="font-size:11px;vertical-align:middle">New</span></h2>
+  <p style="font-size:14px;color:var(--muted);margin-bottom:1rem">Paste any job description below. We'll instantly show which keywords your resume already has and which ones are missing — so you can tailor your resume for that specific job.</p>
+
+  <div class="jd-wrap">
+    <div class="jd-input-col">
+      <label class="jd-label">Paste job description here</label>
+      <textarea id="jd-input" class="jd-textarea" placeholder="Paste the full job description from any job posting — Naukri, LinkedIn, Indeed, company website...&#10;&#10;Example:&#10;We are looking for a Data Engineer with hands-on experience in PySpark, Azure Data Factory, Databricks, SQL, Python. The candidate should have experience in ETL pipelines, data modeling, and Agile methodology..."></textarea>
+      <button class="jd-analyze-btn" onclick="analyzeJD()">🔍 Analyze Keywords</button>
+    </div>
+    <div class="jd-results-col" id="jd-results-col" style="display:none">
+      <div class="jd-match-header">
+        <div class="jd-match-score-wrap">
+          <div class="jd-match-label">Match score</div>
+          <div class="jd-match-score" id="jd-score">0%</div>
+        </div>
+        <div class="jd-bar-bg"><div class="jd-bar-fill" id="jd-bar" style="width:0%"></div></div>
+      </div>
+      <div class="jd-kw-section">
+        <div class="jd-kw-title jd-found-title">✓ Found in your resume</div>
+        <div class="jd-kw-list" id="jd-found"></div>
+      </div>
+      <div class="jd-kw-section" style="margin-top:12px">
+        <div class="jd-kw-title jd-missing-title">✗ Missing — add these to your resume</div>
+        <div class="jd-kw-list" id="jd-missing"></div>
+      </div>
+      <button class="jd-add-btn" onclick="addMissingSkills()">+ Add all missing as skills</button>
+    </div>
+  </div>
+</div>
   <div class="feature-grid">
     <div class="feature-card"><div class="icon">🎯</div><h3>ATS Optimized</h3><p>Our format passes ATS systems used by TCS, Infosys, Wipro, and top startups.</p></div>
     <div class="feature-card"><div class="icon">🇮🇳</div><h3>India focused</h3><p>Built for Indian job market — IT, banking, freshers, campus placements.</p></div>
@@ -644,6 +699,107 @@ function useBullet(i,bullet){
   textarea.value=current?(current+'\n'+bullet):bullet;
   exps[i].desc=textarea.value;
   render();
+}
+
+// ===== JD KEYWORD MATCHER =====
+let missingKeywords=[];
+
+function analyzeJD(){
+  const jdText=document.getElementById('jd-input').value.toLowerCase();
+  if(jdText.trim().length<30){
+    document.getElementById('jd-input').style.borderColor='#ef4444';
+    setTimeout(()=>document.getElementById('jd-input').style.borderColor='',1500);
+    return;
+  }
+
+  // Build resume text from all fields
+  const resumeText=[
+    val('name'),val('jobtitle'),val('summary'),val('location'),
+    ...skills,
+    ...exps.map(e=>`${e.role} ${e.org} ${e.desc}`),
+    ...edus.map(e=>`${e.degree} ${e.school}`),
+    ...certs.map(c=>`${c.name} ${c.issuer}`)
+  ].join(' ').toLowerCase();
+
+  // Tech keywords to look for
+  const techKeywords=[
+    'python','java','sql','javascript','typescript','react','nodejs','spring','django','flask',
+    'pyspark','spark','hadoop','kafka','airflow','databricks','dbt','hive',
+    'azure','aws','gcp','docker','kubernetes','terraform','jenkins','ci/cd','devops',
+    'azure data factory','adf','azure synapse','blob storage','data lake',
+    'postgresql','mysql','mongodb','redis','cassandra','oracle','snowflake',
+    'power bi','tableau','excel','pandas','numpy','scikit-learn','tensorflow','pytorch',
+    'machine learning','deep learning','nlp','data engineering','data science','data analysis',
+    'etl','data pipeline','data modeling','data warehouse','medallion','delta lake',
+    'rest api','microservices','agile','scrum','jira','git','linux',
+    'regression testing','selenium','junit','postman',
+    'communication','leadership','problem solving','teamwork','analytical',
+    'c++','c#','.net','php','ruby','scala','r programming','matlab',
+    'figma','photoshop','ui/ux','html','css','bootstrap','tailwind',
+    'sap','salesforce','erp','crm','powerpoint'
+  ];
+
+  // Also extract multi-word phrases and capitalized words from JD
+  const jdWords=jdText.match(/\b[a-z][a-z0-9\-\.#\+\/]{1,}\b/g)||[];
+  const jdPhrases=[];
+  // Extract 2-word combos
+  for(let i=0;i<jdWords.length-1;i++){
+    const phrase=jdWords[i]+' '+jdWords[i+1];
+    if(techKeywords.includes(phrase)) jdPhrases.push(phrase);
+  }
+
+  const found=[];
+  const missing=[];
+
+  techKeywords.forEach(kw=>{
+    if(!jdText.includes(kw)) return; // not in JD, skip
+    if(resumeText.includes(kw)){
+      found.push(kw);
+    } else {
+      missing.push(kw);
+    }
+  });
+
+  missingKeywords=missing;
+
+  const total=found.length+missing.length;
+  const pct=total>0?Math.round((found.length/total)*100):0;
+  const color=pct>=70?'#16a34a':pct>=40?'#f59e0b':'#ef4444';
+
+  document.getElementById('jd-score').textContent=pct+'%';
+  document.getElementById('jd-score').style.color=color;
+  document.getElementById('jd-bar').style.width=pct+'%';
+  document.getElementById('jd-bar').style.background=color;
+
+  document.getElementById('jd-found').innerHTML=
+    found.length?found.map(k=>`<span class="jd-kw-found">${k}</span>`).join('')
+    :'<span style="font-size:12px;color:var(--muted)">None found yet — fill in your resume above</span>';
+
+  document.getElementById('jd-missing').innerHTML=
+    missing.length?missing.map(k=>`<span class="jd-kw-missing" title="Click to add as skill" onclick="addSingleSkill('${k}')">${k}</span>`).join('')
+    :'<span style="font-size:12px;color:#166534">Great! No important keywords missing.</span>';
+
+  document.getElementById('jd-results-col').style.display='flex';
+}
+
+function addSingleSkill(kw){
+  const formatted=kw.split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
+  if(!skills.includes(formatted)){
+    skills.push(formatted);
+    renderSkills();
+    render();
+  }
+}
+
+function addMissingSkills(){
+  missingKeywords.forEach(kw=>{
+    const formatted=kw.split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
+    if(!skills.includes(formatted)) skills.push(formatted);
+  });
+  renderSkills();
+  render();
+  // Re-analyze to update scores
+  setTimeout(analyzeJD, 300);
 }
 
 renderForms();render();
