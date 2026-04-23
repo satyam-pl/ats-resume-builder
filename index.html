@@ -67,59 +67,76 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
 .download-btn:hover{background:#15803d}
 .print-tip{font-size:11px;color:var(--muted);text-align:center;margin-bottom:1rem;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:6px 10px;line-height:1.5}
 
+/* AI BULLET WRITER */
+.ai-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;font-size:11px;background:linear-gradient(135deg,#6366f1,#2563eb);color:#fff;border:none;border-radius:20px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:5px;transition:opacity 0.2s}
+.ai-btn:hover{opacity:0.88}
+.ai-btn:disabled{opacity:0.5;cursor:not-allowed}
+.ai-panel{background:#fafbff;border:1px solid #c7d3f5;border-radius:10px;padding:12px;margin-top:8px;display:none}
+.ai-panel.open{display:block}
+.ai-panel label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+.ai-panel textarea{width:100%;padding:7px 10px;font-size:13px;border:1px solid var(--border);border-radius:6px;font-family:'DM Sans',sans-serif;outline:none;resize:vertical;min-height:55px;background:#fff;color:var(--text)}
+.ai-panel textarea:focus{border-color:var(--accent)}
+.ai-generate-btn{margin-top:6px;padding:7px 16px;background:linear-gradient(135deg,#6366f1,#2563eb);color:#fff;border:none;border-radius:6px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px}
+.ai-generate-btn:disabled{opacity:0.5;cursor:not-allowed}
+.ai-results{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.ai-bullet-item{background:#fff;border:1px solid #c7d3f5;border-radius:6px;padding:8px 10px;font-size:12px;color:#333;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;line-height:1.5}
+.ai-bullet-item .use-btn{flex-shrink:0;padding:3px 10px;background:var(--accent);color:#fff;border:none;border-radius:4px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.ai-loading{font-size:12px;color:var(--accent);padding:8px 0;display:flex;align-items:center;gap:6px}
+.ai-tag{font-size:10px;background:linear-gradient(135deg,#6366f1,#2563eb);color:#fff;padding:2px 8px;border-radius:20px;margin-left:6px;vertical-align:middle}
+
 /* ===== CV PAPER WRAPPER ===== */
-.cv-paper-wrap{background:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.15);width:210mm;min-height:297mm;transform-origin:top center}
+.cv-paper-wrap{background:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.15);width:210mm;height:auto;min-height:0;transform-origin:top center}
 @media(max-width:900px){.cv-paper-wrap{width:100%;transform:none!important}}
 
 /* ===== TEMPLATE 1: Classic Blue ===== */
-.tpl-classic{padding:32px 36px;font-family:'DM Sans',sans-serif;font-size:11px;line-height:1.5;color:#1a1a1a}
-.tpl-classic .cv-name{font-family:'DM Serif Display',serif;font-size:26px;color:#1a2744;margin-bottom:2px}
-.tpl-classic .cv-role{font-size:12px;color:#2563eb;font-weight:500;margin-bottom:8px}
-.tpl-classic .cv-contact{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:10px;color:#555;padding-bottom:10px;border-bottom:2px solid #1a2744;margin-bottom:14px}
-.tpl-classic .cv-sec-title{font-size:10px;font-weight:500;color:#2563eb;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;padding-bottom:3px;border-bottom:1px solid #dde3f0;margin-top:12px}
-.tpl-classic .cv-entry{margin-bottom:8px}
+.tpl-classic{padding:32px 36px;font-family:'DM Sans',sans-serif;font-size:11.5px;line-height:1.6;color:#1a1a1a}
+.tpl-classic .cv-name{font-family:'DM Serif Display',serif;font-size:28px;color:#1a2744;margin-bottom:3px}
+.tpl-classic .cv-role{font-size:13px;color:#2563eb;font-weight:500;margin-bottom:10px}
+.tpl-classic .cv-contact{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:10.5px;color:#555;padding-bottom:10px;border-bottom:2px solid #1a2744;margin-bottom:16px}
+.tpl-classic .cv-sec-title{font-size:10.5px;font-weight:500;color:#2563eb;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:7px;padding-bottom:3px;border-bottom:1px solid #dde3f0;margin-top:16px}
+.tpl-classic .cv-entry{margin-bottom:10px}
 .tpl-classic .cv-entry-hdr{display:flex;justify-content:space-between;align-items:baseline}
-.tpl-classic .cv-entry-role{font-weight:500;font-size:11px;color:#1a2744}
-.tpl-classic .cv-entry-date{font-size:10px;color:#888}
-.tpl-classic .cv-entry-org{font-size:10px;color:#2563eb;margin-bottom:2px}
-.tpl-classic .cv-entry-desc{font-size:10px;color:#444;line-height:1.55}
-.tpl-classic .cv-skills{display:flex;flex-wrap:wrap;gap:4px}
-.tpl-classic .cv-skill{background:#f0f4ff;border:1px solid #c7d3f5;border-radius:3px;padding:2px 8px;font-size:10px;color:#1a2744}
-.tpl-classic .cv-summary{font-size:10px;color:#444;line-height:1.6}
+.tpl-classic .cv-entry-role{font-weight:500;font-size:12px;color:#1a2744}
+.tpl-classic .cv-entry-date{font-size:10.5px;color:#888}
+.tpl-classic .cv-entry-org{font-size:10.5px;color:#2563eb;margin-bottom:3px}
+.tpl-classic .cv-entry-desc{font-size:11px;color:#444;line-height:1.65}
+.tpl-classic .cv-skills{display:flex;flex-wrap:wrap;gap:5px}
+.tpl-classic .cv-skill{background:#f0f4ff;border:1px solid #c7d3f5;border-radius:3px;padding:3px 10px;font-size:10.5px;color:#1a2744}
+.tpl-classic .cv-summary{font-size:11px;color:#444;line-height:1.7}
 
 /* ===== TEMPLATE 2: Modern Dark Header ===== */
-.tpl-modern{font-family:'Roboto',sans-serif;font-size:11px;color:#1a1a1a}
-.tpl-modern .cv-header{background:#1a2744;padding:24px 32px;color:#fff}
-.tpl-modern .cv-name{font-size:24px;font-weight:500;color:#fff;margin-bottom:2px;letter-spacing:0.5px}
-.tpl-modern .cv-role{font-size:12px;color:#93c5fd;margin-bottom:10px}
-.tpl-modern .cv-contact{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:10px;color:#cbd5e1}
-.tpl-modern .cv-body{padding:24px 32px}
-.tpl-modern .cv-sec-title{font-size:11px;font-weight:500;color:#1a2744;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid #2563eb;margin-top:14px}
-.tpl-modern .cv-entry{margin-bottom:8px}
+.tpl-modern{font-family:'Roboto',sans-serif;font-size:11.5px;color:#1a1a1a}
+.tpl-modern .cv-header{background:#1a2744;padding:26px 36px;color:#fff}
+.tpl-modern .cv-name{font-size:26px;font-weight:500;color:#fff;margin-bottom:3px;letter-spacing:0.5px}
+.tpl-modern .cv-role{font-size:13px;color:#93c5fd;margin-bottom:10px}
+.tpl-modern .cv-contact{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:10.5px;color:#cbd5e1}
+.tpl-modern .cv-body{padding:26px 36px}
+.tpl-modern .cv-sec-title{font-size:11px;font-weight:500;color:#1a2744;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid #2563eb;margin-top:18px}
+.tpl-modern .cv-entry{margin-bottom:10px}
 .tpl-modern .cv-entry-hdr{display:flex;justify-content:space-between;align-items:baseline}
-.tpl-modern .cv-entry-role{font-weight:500;font-size:11px;color:#1e293b}
-.tpl-modern .cv-entry-date{font-size:10px;color:#64748b;white-space:nowrap}
-.tpl-modern .cv-entry-org{font-size:10px;color:#2563eb;margin-bottom:2px}
-.tpl-modern .cv-entry-desc{font-size:10px;color:#444;line-height:1.55}
-.tpl-modern .cv-skills{display:flex;flex-wrap:wrap;gap:4px}
-.tpl-modern .cv-skill{background:#eff6ff;border-left:2px solid #2563eb;padding:2px 8px;font-size:10px;color:#1e3a5f;border-radius:0 3px 3px 0}
-.tpl-modern .cv-summary{font-size:10px;color:#444;line-height:1.6}
+.tpl-modern .cv-entry-role{font-weight:500;font-size:12px;color:#1e293b}
+.tpl-modern .cv-entry-date{font-size:10.5px;color:#64748b;white-space:nowrap}
+.tpl-modern .cv-entry-org{font-size:10.5px;color:#2563eb;margin-bottom:3px}
+.tpl-modern .cv-entry-desc{font-size:11px;color:#444;line-height:1.65}
+.tpl-modern .cv-skills{display:flex;flex-wrap:wrap;gap:5px}
+.tpl-modern .cv-skill{background:#eff6ff;border-left:2px solid #2563eb;padding:3px 10px;font-size:10.5px;color:#1e3a5f;border-radius:0 3px 3px 0}
+.tpl-modern .cv-summary{font-size:11px;color:#444;line-height:1.7}
 
 /* ===== TEMPLATE 3: Minimal Clean ===== */
-.tpl-minimal{padding:36px 40px;font-family:'Merriweather',serif;font-size:11px;color:#2d2d2d}
-.tpl-minimal .cv-name{font-size:22px;font-weight:700;color:#111;margin-bottom:2px;letter-spacing:-0.3px}
-.tpl-minimal .cv-role{font-size:11px;color:#666;font-style:italic;margin-bottom:8px;font-family:'Merriweather',serif}
-.tpl-minimal .cv-contact{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:9.5px;color:#777;padding-bottom:10px;border-bottom:1px solid #ddd;margin-bottom:14px;font-family:'Roboto',sans-serif}
-.tpl-minimal .cv-sec-title{font-size:10px;font-weight:700;color:#111;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:7px;margin-top:14px}
-.tpl-minimal .cv-entry{margin-bottom:9px;padding-left:10px;border-left:2px solid #e5e5e5}
+.tpl-minimal{padding:36px 40px;font-family:'Merriweather',serif;font-size:11.5px;color:#2d2d2d}
+.tpl-minimal .cv-name{font-size:24px;font-weight:700;color:#111;margin-bottom:3px;letter-spacing:-0.3px}
+.tpl-minimal .cv-role{font-size:12px;color:#666;font-style:italic;margin-bottom:10px;font-family:'Merriweather',serif}
+.tpl-minimal .cv-contact{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:10px;color:#777;padding-bottom:10px;border-bottom:1px solid #ddd;margin-bottom:16px;font-family:'Roboto',sans-serif}
+.tpl-minimal .cv-sec-title{font-size:10.5px;font-weight:700;color:#111;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:8px;margin-top:18px}
+.tpl-minimal .cv-entry{margin-bottom:10px;padding-left:12px;border-left:2px solid #e5e5e5}
 .tpl-minimal .cv-entry-hdr{display:flex;justify-content:space-between;align-items:baseline}
-.tpl-minimal .cv-entry-role{font-weight:700;font-size:10.5px;color:#111}
-.tpl-minimal .cv-entry-date{font-size:9.5px;color:#999;font-family:'Roboto',sans-serif}
-.tpl-minimal .cv-entry-org{font-size:10px;color:#555;font-style:italic;margin-bottom:2px}
-.tpl-minimal .cv-entry-desc{font-size:9.5px;color:#444;line-height:1.6;font-family:'Roboto',sans-serif}
-.tpl-minimal .cv-skills{display:flex;flex-wrap:wrap;gap:5px;font-family:'Roboto',sans-serif}
-.tpl-minimal .cv-skill{border:1px solid #ccc;padding:2px 8px;font-size:9.5px;color:#333;border-radius:2px}
-.tpl-minimal .cv-summary{font-size:9.5px;color:#444;line-height:1.7;font-family:'Roboto',sans-serif}
+.tpl-minimal .cv-entry-role{font-weight:700;font-size:11.5px;color:#111}
+.tpl-minimal .cv-entry-date{font-size:10px;color:#999;font-family:'Roboto',sans-serif}
+.tpl-minimal .cv-entry-org{font-size:10.5px;color:#555;font-style:italic;margin-bottom:3px}
+.tpl-minimal .cv-entry-desc{font-size:10.5px;color:#444;line-height:1.65;font-family:'Roboto',sans-serif}
+.tpl-minimal .cv-skills{display:flex;flex-wrap:wrap;gap:6px;font-family:'Roboto',sans-serif}
+.tpl-minimal .cv-skill{border:1px solid #ccc;padding:3px 10px;font-size:10.5px;color:#333;border-radius:2px}
+.tpl-minimal .cv-summary{font-size:10.5px;color:#444;line-height:1.75;font-family:'Roboto',sans-serif}
 
 /* Content area */
 .content-section{max-width:900px;margin:3rem auto;padding:0 1.5rem}
@@ -141,9 +158,13 @@ footer p{font-size:13px;margin-top:0.5rem}
 
 /* ===== PRINT STYLES — this is what becomes the PDF ===== */
 @media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   body > *:not(#print-area){display:none!important}
-  #print-area{display:block!important;position:fixed;top:0;left:0;width:100%;height:100%;margin:0;padding:0;z-index:9999}
-  .cv-paper-wrap{box-shadow:none!important;width:100%!important;min-height:auto!important;transform:none!important}
+  #print-area{display:block!important;position:fixed;top:0;left:0;width:100%;margin:0;padding:0;z-index:9999}
+  .cv-paper-wrap{box-shadow:none!important;width:100%!important;height:auto!important;transform:none!important;border-radius:0!important}
+  .tpl-classic,.tpl-minimal{padding:18mm 20mm!important}
+  .tpl-modern .cv-header{padding:16px 20mm!important}
+  .tpl-modern .cv-body{padding:14px 20mm!important}
   @page{size:A4;margin:0}
 }
 #print-area{display:none}
@@ -202,7 +223,7 @@ footer p{font-size:13px;margin-top:0.5rem}
       <div class="section-title">Professional summary</div>
       <div class="field"><textarea id="summary" placeholder="2–3 lines: your experience, key skills, and what you bring..." oninput="render()"></textarea></div>
 
-      <div class="section-title">Work experience</div>
+      <div class="section-title">Work experience <span class="ai-tag">✨ AI</span></div>
       <div id="exp-list"></div>
       <button class="add-btn" onclick="addExp()">+ Add experience</button>
 
@@ -312,7 +333,14 @@ function renderForms(){
         <div class="field"><label>Start</label><input value="${e.start}" oninput="exps[${i}].start=this.value;render()" placeholder="Jun 2023"></div>
         <div class="field"><label>End</label><input value="${e.end}" oninput="exps[${i}].end=this.value;render()" placeholder="Present"></div>
       </div>
-      <div class="field"><label>Achievements (start each line with •)</label><textarea oninput="exps[${i}].desc=this.value;render()" placeholder="• Built ETL pipelines using PySpark reducing processing time by 40%&#10;• Managed 5TB daily data ingestion">${e.desc}</textarea></div>
+      <div class="field"><label>Achievements (start each line with •)</label><textarea id="exp-desc-${i}" oninput="exps[${i}].desc=this.value;render()" placeholder="• Built ETL pipelines using PySpark reducing processing time by 40%&#10;• Managed 5TB daily data ingestion">${e.desc}</textarea></div>
+      <button class="ai-btn" onclick="toggleAI(${i})">✨ AI Write Bullets</button>
+      <div class="ai-panel" id="ai-panel-${i}">
+        <label>Describe what you did in simple words (no need to be formal):</label>
+        <textarea id="ai-input-${i}" placeholder="e.g. I built data pipelines using PySpark, worked with Azure, fixed bugs in ETL jobs, helped reduce pipeline failures"></textarea>
+        <button class="ai-generate-btn" id="ai-gen-btn-${i}" onclick="generateBullets(${i})">✨ Generate bullets</button>
+        <div class="ai-results" id="ai-results-${i}"></div>
+      </div>
     </div>`).join('');
 
   document.getElementById('edu-list').innerHTML=edus.map((e,i)=>`
@@ -400,6 +428,77 @@ function downloadPDF(){
   const html=buildCVHTML(currentTpl);
   document.getElementById('print-area').innerHTML=`<div class="cv-paper-wrap">${html}</div>`;
   window.print();
+}
+
+function toggleAI(i){
+  const panel=document.getElementById('ai-panel-'+i);
+  panel.classList.toggle('open');
+}
+
+async function generateBullets(i){
+  const input=document.getElementById('ai-input-'+i);
+  const resultsDiv=document.getElementById('ai-results-'+i);
+  const btn=document.getElementById('ai-gen-btn-'+i);
+  const role=exps[i].role||'professional';
+  const org=exps[i].org||'the company';
+  const userText=input.value.trim();
+
+  if(!userText){input.style.borderColor='#ef4444';setTimeout(()=>input.style.borderColor='',1500);return;}
+
+  btn.disabled=true;
+  btn.textContent='Generating...';
+  resultsDiv.innerHTML='<div class="ai-loading">✨ AI is writing your bullets...</div>';
+
+  try{
+    const response=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{
+          role:'user',
+          content:`You are an expert resume writer for the Indian job market. 
+The person worked as "${role}" at "${org}".
+They described their work as: "${userText}"
+
+Generate exactly 4 ATS-friendly resume bullet points.
+Rules:
+- Start each bullet with a strong action verb (Engineered, Developed, Automated, Optimized, Designed, Led, Built, Reduced, Improved, etc.)
+- Include numbers/metrics where possible (even estimates like "~40% faster", "10+ pipelines")
+- Keep each bullet under 20 words
+- Make them achievement-focused, not duty-focused
+- Relevant to Indian IT job market
+
+Return ONLY a JSON array of 4 strings, no explanation, no markdown, no extra text.
+Example format: ["bullet 1","bullet 2","bullet 3","bullet 4"]`
+        }]
+      })
+    });
+
+    const data=await response.json();
+    const text=data.content[0].text.trim();
+    const bullets=JSON.parse(text);
+
+    resultsDiv.innerHTML=bullets.map((b,idx)=>`
+      <div class="ai-bullet-item">
+        <span>• ${b}</span>
+        <button class="use-btn" onclick="useBullet(${i},'• ${b.replace(/'/g,"\\'")}')">Use</button>
+      </div>`).join('');
+  }catch(err){
+    resultsDiv.innerHTML='<div style="font-size:12px;color:#ef4444;padding:6px 0">Something went wrong. Please try again.</div>';
+  }
+
+  btn.disabled=false;
+  btn.innerHTML='✨ Generate bullets';
+}
+
+function useBullet(i,bullet){
+  const textarea=document.getElementById('exp-desc-'+i);
+  const current=textarea.value.trim();
+  textarea.value=current?(current+'\n'+bullet):bullet;
+  exps[i].desc=textarea.value;
+  render();
 }
 
 renderForms();render();
